@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GSTR-9 Annual Return Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <header class="page-header">
+      <div class="page-header__content">
+        <div>
+          <p class="page-header__eyebrow">GST Annual Return</p>
+          <h1 class="page-header__title">GSTR-9 Filing Overview</h1>
+        </div>
+        <div class="page-header__actions">
+          <button class="button button--ghost" id="resetFilters" type="button">
+            Reset Filters
+          </button>
+          <button class="button" id="exportReport" type="button">
+            Export Summary
+          </button>
+        </div>
+      </div>
+      <p class="page-header__subtitle">
+        Track filing readiness for your annual return, review turnover and tax
+        liabilities section-by-section, and download a summary for your
+        compliance records.
+      </p>
+    </header>
+
+    <main class="layout">
+      <section class="card card--filters" aria-labelledby="filters-title">
+        <div class="card__header">
+          <h2 id="filters-title">Filters</h2>
+          <p class="card__subtitle">
+            Choose the reporting period and GSTIN to load the latest filing
+            information.
+          </p>
+        </div>
+        <form class="filters" id="filtersForm">
+          <label class="field">
+            <span class="field__label">Financial year</span>
+            <select id="financialYear" class="field__input" required></select>
+          </label>
+          <label class="field">
+            <span class="field__label">GSTIN</span>
+            <select id="gstin" class="field__input" required></select>
+          </label>
+          <label class="field">
+            <span class="field__label">Filing status</span>
+            <select id="status" class="field__input">
+              <option value="all">All</option>
+              <option value="draft">Draft</option>
+              <option value="ready_to_file">Ready to file</option>
+              <option value="filed">Filed</option>
+            </select>
+          </label>
+          <label class="field field--search">
+            <span class="field__label">Search section</span>
+            <input
+              id="sectionSearch"
+              type="search"
+              class="field__input"
+              placeholder="Search by description or section code"
+            />
+          </label>
+        </form>
+      </section>
+
+      <section class="card card--summary" aria-labelledby="summary-title">
+        <div class="card__header">
+          <h2 id="summary-title">Filing summary</h2>
+          <p class="card__subtitle">
+            Overview of key figures and readiness indicators for the selected
+            filing.
+          </p>
+        </div>
+        <dl class="summary-grid" id="summaryGrid"></dl>
+      </section>
+
+      <section class="card card--details" aria-labelledby="details-title">
+        <div class="card__header card__header--row">
+          <div>
+            <h2 id="details-title">Section wise breakdown</h2>
+            <p class="card__subtitle">
+              Review turnover, taxable value, and tax liability for each section
+              in the annual return.
+            </p>
+          </div>
+          <div class="card__toggle">
+            <label class="toggle">
+              <input type="checkbox" id="showVariance" />
+              <span class="toggle__label">Highlight variances</span>
+            </label>
+          </div>
+        </div>
+
+        <div class="table-wrapper" role="region" aria-live="polite">
+          <table class="data-table" id="sectionsTable">
+            <thead>
+              <tr>
+                <th scope="col">Section</th>
+                <th scope="col">Description</th>
+                <th scope="col">Taxable value</th>
+                <th scope="col">Tax paid</th>
+                <th scope="col">Tax payable</th>
+                <th scope="col">Variance</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="card card--notes" aria-labelledby="notes-title">
+        <div class="card__header card__header--row">
+          <h2 id="notes-title">Action items</h2>
+          <button class="button button--ghost" id="addNote" type="button">
+            Add action item
+          </button>
+        </div>
+        <ul class="notes" id="notesList"></ul>
+      </section>
+    </main>
+
+    <template id="noteTemplate">
+      <li class="note">
+        <div class="note__content">
+          <p class="note__title"></p>
+          <p class="note__meta"></p>
+        </div>
+        <button class="note__delete" type="button" aria-label="Remove note">
+          ✕
+        </button>
+      </li>
+    </template>
+
+    <script src="script.js" type="module"></script>
+  </body>
+</html>
